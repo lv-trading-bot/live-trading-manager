@@ -1,12 +1,12 @@
 const Base_Manager = require('./base_manager');
 
-const TYPE = "trigger";
+const TYPE = "trade";
 
 /**
  * @param {string} connectionString - connection string to mongodb
  * @param {string} dbName - database name 
  */
-class Trigger_Manager extends Base_Manager {
+class Trade_Manager extends Base_Manager {
     constructor(props) {
         super(props);
     }
@@ -16,10 +16,10 @@ class Trigger_Manager extends Base_Manager {
      * @param {String} id - String of id
      * @param {String} asset - name of asset
      * @param {String} currency - name of currency
-     * @param {Array} trigges - trigges
+     * @param {Object} trade - trade
      */
-    write(id, asset, currency, trigges) {
-        this._write(id, TYPE, asset, currency, trigges);
+    write(id, asset, currency, trade) {
+        this._write(id, TYPE, asset, currency, [trade]);
     }
 
     /**
@@ -47,20 +47,6 @@ class Trigger_Manager extends Base_Manager {
         this._update(idPair, TYPE, asset, currency, {id: idTrigger}, triggerData);
     }
 
-    // deleteAllThenInsert(id, asset, currency, trigges) {
-    //     if (!this.db) {
-    //         setTimeout(() => {
-    //             this.deleteAllThenInsert(id, asset, currency, trigges);
-    //         }, 1000);
-    //         return;
-    //     }
-
-    //     const collection = this.db.collection(this._generate_collection_name(id, TYPE, asset, currency));
-
-    //     collection.deleteMany({}, (err, res) => {
-    //         this.write(id, asset, currency, trigges)
-    //     })
-    // }
 }
 
-module.exports = Trigger_Manager;
+module.exports = Trade_Manager;

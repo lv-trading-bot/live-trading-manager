@@ -6,7 +6,10 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var initRouter = require('./routes/init');
+var reconnectRouter = require('./routes/reconnect');
 var triggerRouter = require('./routes/trigger');
+var tradeRouter = require('./routes/trade');
+var portfolioRouter = require('./routes/portfolio');
 
 var app = express();
 
@@ -22,7 +25,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/init', initRouter);
+app.use('/reconnect', reconnectRouter);
 app.use('/trigger', triggerRouter);
+app.use('/trade', tradeRouter);
+app.use('/portfolio', portfolioRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

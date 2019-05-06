@@ -7,7 +7,7 @@ const trigger_mannager = new Trigger_Manager({
     dbName: utils.getDbName()
 });
 
-// Update trigger
+// Update or insert trigger
 const putTrigger = function(req, res, next) {
     let id = req.body.id;
     let trigger_id = req.body.trigger_id;
@@ -38,7 +38,7 @@ const putTrigger = function(req, res, next) {
     res.end();
 }
 
-// Insert triiger
+// Insert trigger
 const postTrigger = function(req, res, next) {
     let id = req.body.id;
     let asset = req.body.asset;

@@ -3,12 +3,6 @@ const utils = require('../utils');
 const log = require('../log');
 const _ = require('lodash');
 
-const generate_collection_name = (id, type, asset, currency) => {
-    let display = [id, type, asset, currency];
-    display = _.filter(display, item => item);
-    return display.join('-');
-}
-
 /**
  * @param {string} connectionString - connection string to mongodb
  * @param {string} dbName - database name 
@@ -30,6 +24,13 @@ class Base_Manager {
             throw err;
         }
     }
+
+    _generate_collection_name(id, type, asset, currency) {
+        let display = [id, type, asset, currency];
+        display = _.filter(display, item => item);
+        return display.join('-');
+    }
+
     /**
      * 
      * @param {string} id - id của pair
@@ -46,7 +47,7 @@ class Base_Manager {
             return;
         }
 
-        const collection = this.db.collection(generate_collection_name(id, type, asset, currency));
+        const collection = this.db.collection(this._generate_collection_name(id, type, asset, currency));
         collection.insertMany(data, (err, res) => {
             if (err) throw err;
         })
@@ -68,7 +69,7 @@ class Base_Manager {
                 resolve(await this.read(id, type, asset, currency, condition));
                 return;
             }
-            const collection = this.db.collection(generate_collection_name(id, type, asset, currency, sort, limit));
+            const collection = this.db.collection(this._generate_collection_name(id, type, asset, currency, sort, limit));
             collection.find(condition).sort(sort).limit(limit).toArray((err, res) => {
                 if (err) reject(err);
                 else resolve(res);
@@ -92,7 +93,7 @@ class Base_Manager {
             }, 1000);
             return;
         }
-        const collection = this.db.collection(generate_collection_name(id, type, asset, currency));
+        const collection = this.db.collection(this._generate_collection_name(id, type, asset, currency));
         collection.findOneAndReplace(condition, data, {upsert : true}, (err, res) => {
             if (err) throw err;
         })
