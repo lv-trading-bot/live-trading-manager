@@ -10,6 +10,7 @@ var reconnectRouter = require('./routes/reconnect');
 var triggerRouter = require('./routes/trigger');
 var tradeRouter = require('./routes/trade');
 var portfolioRouter = require('./routes/portfolio');
+var adviceRouter = require('./routes/advice');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use('/reconnect', reconnectRouter);
 app.use('/trigger', triggerRouter);
 app.use('/trade', tradeRouter);
 app.use('/portfolio', portfolioRouter);
+app.use('/advice', adviceRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
