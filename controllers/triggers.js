@@ -58,6 +58,9 @@ const postTrigger = function(req, res, next) {
         throw new Error("Thiếu trigger");
     }
 
+    if(_.isArray(trigger)) {
+        trigger_mannager.write(id, asset, currency, trigger);
+    } else
     if(_.isObject(trigger)) {
         trigger_mannager.write(id, asset, currency, [trigger]);
     }

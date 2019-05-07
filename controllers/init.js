@@ -1,52 +1,52 @@
-const Trigger_Manager = require('../data_access_layer/trigger_manager');
-const Portfolio_Manager = require('../data_access_layer/portfolio_manager');
-const utils = require('../utils');
-const _ = require('lodash');
+// const Trigger_Manager = require('../data_access_layer/trigger_manager');
+// const Portfolio_Manager = require('../data_access_layer/portfolio_manager');
+// const utils = require('../utils');
+// const _ = require('lodash');
 
-const trigger_mannager = new Trigger_Manager({
-    connectionString: utils.getConnectionString(), 
-    dbName: utils.getDbName()
-});
+// const trigger_mannager = new Trigger_Manager({
+//     connectionString: utils.getConnectionString(), 
+//     dbName: utils.getDbName()
+// });
 
-const portfolio_manager = new Portfolio_Manager({
-    connectionString: utils.getConnectionString(), 
-    dbName: utils.getDbName()
-});
+// const portfolio_manager = new Portfolio_Manager({
+//     connectionString: utils.getConnectionString(), 
+//     dbName: utils.getDbName()
+// });
 
 const generate_id = () => {
     return `${new Date().getTime()}${Math.floor(Math.random()*1000)}`; 
 }
 
-const postInit = function (req, res, next) {
-    let asset = req.body.asset;
-    let currency = req.body.currency;
-    let triggers = req.body.triggers;
-    let portfolio = req.body.portfolio;
+const getInit = function (req, res, next) {
+    // let asset = req.body.asset;
+    // let currency = req.body.currency;
+    // // let triggers = req.body.triggers;
+    // let portfolio = req.body.portfolio;
 
-    if(!asset) {
-        throw new Error("Thiếu asset");
-    }
-    if(!currency) {
-        throw new Error("Thiếu currency");
-    }
-    if(!triggers) {
-        throw new Error("Thiếu triggers");
-    }
-    if(!portfolio) {
-        throw new Error("Thiếu portfolio");
-    }
+    // if(!asset) {
+    //     throw new Error("Thiếu asset");
+    // }
+    // if(!currency) {
+    //     throw new Error("Thiếu currency");
+    // }
+    // if(!triggers) {
+    //     throw new Error("Thiếu triggers");
+    // }
+    // if(!portfolio) {
+    //     throw new Error("Thiếu portfolio");
+    // }
 
     const id = generate_id();
 
     // Save triggers
-    if(_.isArray(triggers) && triggers.length > 0) {
-        trigger_mannager.write(id, asset, currency, triggers);
-    }
+    // if(_.isArray(triggers) && triggers.length > 0) {
+    //     trigger_mannager.write(id, asset, currency, triggers);
+    // }
 
     // Save portfolio
-    if(_.isObject(portfolio)) {
-        portfolio_manager.updateOrInsert(id, asset, currency, portfolio);
-    }
+    // if(_.isObject(portfolio)) {
+    //     portfolio_manager.updateOrInsert(id, asset, currency, portfolio);
+    // }
 
     res.setHeader("content-type", "json/text")
     res.end(JSON.stringify({
@@ -54,4 +54,4 @@ const postInit = function (req, res, next) {
     }))
 }
 
-module.exports.postInit = postInit;
+module.exports.getInit = getInit;
