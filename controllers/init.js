@@ -27,6 +27,7 @@ const postInit = function (req, res, next) {
     let config = req.body.config;
     let asset = req.body.asset;
     let currency = req.body.currency;
+    let id = req.body.id;
     // // let triggers = req.body.triggers;
     // let portfolio = req.body.portfolio;
 
@@ -46,7 +47,7 @@ const postInit = function (req, res, next) {
     //     throw new Error("Thiếu portfolio");
     // }
 
-    const id = generate_id();
+    id = id ? id : generate_id();
 
     config_manager.updateOrInsert(id, asset, currency, config);
 
