@@ -1,6 +1,7 @@
 // const Trigger_Manager = require('../data_access_layer/trigger_manager');
 // const Portfolio_Manager = require('../data_access_layer/portfolio_manager');
-// const utils = require('../utils');
+const Config_Manager = require('../data_access_layer/config_manager');
+const utils = require('../utils');
 // const _ = require('lodash');
 
 // const trigger_mannager = new Trigger_Manager({
@@ -13,22 +14,31 @@
 //     dbName: utils.getDbName()
 // });
 
+const config_manager = new Config_Manager({
+    connectionString: utils.getConnectionString(), 
+    dbName: utils.getDbName()
+});
+
 const generate_id = () => {
     return `${new Date().getTime()}${Math.floor(Math.random()*1000)}`; 
 }
 
-const getInit = function (req, res, next) {
-    // let asset = req.body.asset;
-    // let currency = req.body.currency;
+const postInit = function (req, res, next) {
+    let config = req.body.config;
+    let asset = req.body.asset;
+    let currency = req.body.currency;
     // // let triggers = req.body.triggers;
     // let portfolio = req.body.portfolio;
 
-    // if(!asset) {
-    //     throw new Error("Thiếu asset");
-    // }
-    // if(!currency) {
-    //     throw new Error("Thiếu currency");
-    // }
+    if(!asset) {
+        throw new Error("Thiếu asset");
+    }
+    if(!currency) {
+        throw new Error("Thiếu currency");
+    }
+    if(!config) {
+        throw new Error("Thiếu config");
+    }
     // if(!triggers) {
     //     throw new Error("Thiếu triggers");
     // }
@@ -37,6 +47,8 @@ const getInit = function (req, res, next) {
     // }
 
     const id = generate_id();
+
+    config_manager.updateOrInsert(id, asset, currency, config);
 
     // Save triggers
     // if(_.isArray(triggers) && triggers.length > 0) {
@@ -54,4 +66,4 @@ const getInit = function (req, res, next) {
     }))
 }
 
-module.exports.getInit = getInit;
+module.exports.postInit = postInit;

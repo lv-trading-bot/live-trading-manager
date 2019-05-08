@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const {getInit} = require('../controllers/init');
+const {postInit} = require('../controllers/init');
 
 /* GET users listing. */
-router.get('/', getInit);
+router.post('/', postInit);
 
 module.exports = router;
