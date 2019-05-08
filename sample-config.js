@@ -20,4 +20,7 @@ config.machine_learning_api = {
     live: "/live"
 }
 
+config.production = true;
+config.loggerAdapter = 'file';
+
 module.exports = config;
