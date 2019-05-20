@@ -1,7 +1,7 @@
 let config = {};
 
 config.mongodb = {
-    connectionString: "mongodb://localhost:27017",
+    connectionString: process.env.MONGO_URL || "mongodb://localhost:27017",
     dbName:  "db_live_trading_manager"
 }
 
@@ -16,7 +16,7 @@ config.pairs = {
 }
 
 config.machine_learning_api = {
-    base: "http://localhost:5000",
+    base: process.env.ML_SERVER_BASE_API || "http://localhost:3002",
     live: "/live"
 }
 

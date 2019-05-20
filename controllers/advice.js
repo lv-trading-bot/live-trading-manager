@@ -21,7 +21,7 @@ const callPostAxios = (body) => {
         })
         .catch(err => {
             let errMess = err.response ? err.response.data : '' + err;
-            log.warn('' + err);
+            log.warn(err);
             reject({
                 result: 0,
                 error: errMess
