@@ -61,16 +61,17 @@ class Base_Manager {
      * @param {Object} condition - object điều kiện sẽ đưa vào cho mongo ở hàm find,
      * @param {Object} sort - object sort sẽ đưa vào hàm sort
      * @param {Number} limit - limit record, default 100
+     * @param {Number} page - page, default 1
      */
-    _read(id, type, asset, currency, condition, sort = {}, limit = 100) {
+    _read(id, type, asset, currency, condition, sort = {}, limit = 100, page = 1) {
         return new Promise(async (resolve, reject) => {
             if (!this.db) {
                 await utils.wait(1000);
-                resolve(await this.read(id, type, asset, currency, condition));
+                resolve(await this.read(id, type, asset, currency, condition, page));
                 return;
             }
             const collection = this.db.collection(this._generate_collection_name(id, type, asset, currency, sort, limit));
-            collection.find(condition).sort(sort).limit(limit).toArray((err, res) => {
+            collection.find(condition).sort(sort).limit(limit).skip((page - 1) * limit).toArray((err, res) => {
                 if (err) reject(err);
                 else resolve(res);
             })
