@@ -22,6 +22,12 @@ app.set('view engine', 'jade');
 app.use(logger('combined', {
   stream: fs.createWriteStream(path.join(__dirname, 'logs/requests.log'), { flags: 'a' })
 }));
+
+// allow cross access
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  next();
+})
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
