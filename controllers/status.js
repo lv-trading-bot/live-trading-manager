@@ -1,45 +1,14 @@
-const Portfolio_Manager = require('../data_access_layer/portfolio_manager');
+const Status_Manager = require('../data_access_layer/status_manager');
 const utils = require('../utils');
 const _ = require('lodash');
 const log = require('../log');
 
-const portfolio_manager = new Portfolio_Manager({
+const status_manager = new Status_Manager({
     connectionString: utils.getConnectionString(),
     dbName: utils.getDbName()
 });
 
-// Update or insert portfolio
-const putPortfolio = function (req, res, next) {
-    let id = req.body.id;
-    let asset = req.body.asset;
-    let currency = req.body.currency;
-    let portfolio = req.body.portfolio;
-
-    if (!id) {
-        throw new Error("Thiếu id");
-    }
-    if (!asset) {
-        throw new Error("Thiếu asset");
-    }
-    if (!currency) {
-        throw new Error("Thiếu currency");
-    }
-    if (!portfolio) {
-        throw new Error("Thiếu portfolio");
-    }
-
-    if (_.isObject(portfolio)) {
-        try {
-            portfolio_manager.updateOrInsert(id, asset, currency, portfolio);
-        } catch (error) {
-            log.warn(error);
-        }
-    }
-
-    res.end();
-}
-
-const getPortfolio = function (req, res, next) {
+const getStatus = function (req, res, next) {
     let condition, sort, limit, page;
     try {
         condition = req.query.condition ? JSON.parse(req.query.condition) : undefined;
@@ -79,10 +48,10 @@ const getPortfolio = function (req, res, next) {
         throw new Error("Page work with limit!");
     }
 
-    portfolio_manager.read(condition, sort, limit, page)
-        .then(arrayPortfolio => {
+    status_manager.read(condition, sort, limit, page)
+        .then(arrayStatus => {
             res.setHeader('content-type', 'json/text')
-            res.end(JSON.stringify(arrayPortfolio));
+            res.end(JSON.stringify(arrayStatus));
         })
         .catch(err => {
             log.warn(err);
@@ -91,6 +60,5 @@ const getPortfolio = function (req, res, next) {
 }
 
 module.exports = {
-    putPortfolio,
-    getPortfolio
+    getStatus
 }
