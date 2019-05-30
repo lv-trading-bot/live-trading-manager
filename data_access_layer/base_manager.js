@@ -95,7 +95,7 @@ class Base_Manager {
             return;
         }
         const collection = this.db.collection(this._generate_collection_name(id, type, asset, currency));
-        collection.findOneAndReplace(condition, data, {upsert : true}, (err, res) => {
+        collection.updateOne(condition, {$set: data}, {upsert : true}, (err, res) => {
             if (err) throw err;
         })
     }

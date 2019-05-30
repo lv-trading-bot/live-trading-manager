@@ -2,6 +2,7 @@ const Portfolio_Manager = require('../data_access_layer/portfolio_manager');
 const utils = require('../utils');
 const _ = require('lodash');
 const log = require('../log');
+const moment = require('moment');
 
 const portfolio_manager = new Portfolio_Manager({
     connectionString: utils.getConnectionString(),
@@ -14,6 +15,7 @@ const putPortfolio = function (req, res, next) {
     let asset = req.body.asset;
     let currency = req.body.currency;
     let portfolio = req.body.portfolio;
+    let is_new = req.body.is_new;
 
     if (!id) {
         throw new Error("Thiếu id");
@@ -27,10 +29,17 @@ const putPortfolio = function (req, res, next) {
     if (!portfolio) {
         throw new Error("Thiếu portfolio");
     }
+    if (is_new === undefined) {
+        throw new Error("Thiếu is_new");
+    }
 
     if (_.isObject(portfolio)) {
         try {
-            portfolio_manager.updateOrInsert(id, asset, currency, portfolio);
+            if(is_new) {
+                portfolio_manager.updateOrInsert(id, asset, currency, {...portfolio, initPortfolio: portfolio, startTime: moment().utc().toISOString()});
+            } else {
+                portfolio_manager.updateOrInsert(id, asset, currency, portfolio);
+            }
         } catch (error) {
             log.warn(error);
         }

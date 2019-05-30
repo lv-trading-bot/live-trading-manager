@@ -11,6 +11,7 @@ var reconnectRouter = require('./routes/reconnect');
 var triggerRouter = require('./routes/trigger');
 var tradeRouter = require('./routes/trade');
 var portfolioRouter = require('./routes/portfolio');
+var configRouter = require('./routes/config');
 var statusRouter = require('./routes/status');
 var adviceRouter = require('./routes/advice');
 
@@ -40,6 +41,7 @@ app.use('/reconnect', reconnectRouter);
 app.use('/trigger', triggerRouter);
 app.use('/trade', tradeRouter);
 app.use('/portfolio', portfolioRouter);
+app.use('/config', configRouter);
 app.use('/advice', adviceRouter);
 app.use('/status', statusRouter);
 

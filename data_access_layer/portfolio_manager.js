@@ -23,7 +23,6 @@ class Portfolio_Manager extends Base_Manager {
     }
 
     /**
-     * No return
      * @param {Object} condition - condition
      * @param {Object} sort - sort
      * @param {Number} limit - limit, default 100
