@@ -1,12 +1,7 @@
-const Status_Manager = require('../data_access_layer/status_manager');
-const utils = require('../utils');
 const _ = require('lodash');
 const log = require('../log');
 
-const status_manager = new Status_Manager({
-    connectionString: utils.getConnectionString(),
-    dbName: utils.getDbName()
-});
+const {status_manager} = require('../data_access_layer');
 
 const getStatus = function (req, res, next) {
     let condition, sort, limit, page;

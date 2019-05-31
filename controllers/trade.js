@@ -1,11 +1,6 @@
-const Trade_Manager = require('../data_access_layer/trade_manager');
-const utils = require('../utils');
 const _ = require('lodash');
 
-const trade_mannager = new Trade_Manager({
-    connectionString: utils.getConnectionString(),
-    dbName: utils.getDbName()
-});
+const {trade_manager} = require('../data_access_layer');
 
 // Insert trade
 const postTrade = function (req, res, next) {
@@ -28,7 +23,7 @@ const postTrade = function (req, res, next) {
     }
 
     if (_.isObject(trade)) {
-        trade_mannager.write(id, asset, currency, trade);
+        trade_manager.write(id, asset, currency, trade);
     }
 
     res.end();
@@ -89,7 +84,7 @@ const getTrade = function (req, res, next) {
         throw new Error("Page work with limit!");
     }
 
-    trade_mannager.read(id, asset, currency, condition, sort, limit, page)
+    trade_manager.read(id, asset, currency, condition, sort, limit, page)
         .then(arrayTrade => {
             res.setHeader('content-type', 'json/text')
             res.end(JSON.stringify(arrayTrade));

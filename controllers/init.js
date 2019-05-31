@@ -1,23 +1,4 @@
-// const Trigger_Manager = require('../data_access_layer/trigger_manager');
-// const Portfolio_Manager = require('../data_access_layer/portfolio_manager');
-const Config_Manager = require('../data_access_layer/config_manager');
-const utils = require('../utils');
-// const _ = require('lodash');
-
-// const trigger_mannager = new Trigger_Manager({
-//     connectionString: utils.getConnectionString(), 
-//     dbName: utils.getDbName()
-// });
-
-// const portfolio_manager = new Portfolio_Manager({
-//     connectionString: utils.getConnectionString(), 
-//     dbName: utils.getDbName()
-// });
-
-const config_manager = new Config_Manager({
-    connectionString: utils.getConnectionString(), 
-    dbName: utils.getDbName()
-});
+const {config_manager} = require('../data_access_layer');
 
 const generate_id = () => {
     return `${new Date().getTime()}${Math.floor(Math.random()*1000)}`; 

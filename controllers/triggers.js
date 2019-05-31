@@ -1,11 +1,6 @@
-const Trigger_Manager = require('../data_access_layer/trigger_manager');
-const utils = require('../utils');
 const _ = require('lodash');
 
-const trigger_mannager = new Trigger_Manager({
-    connectionString: utils.getConnectionString(), 
-    dbName: utils.getDbName()
-});
+const {trigger_manager} = require('../data_access_layer');
 
 // Update or insert trigger
 const putTrigger = function(req, res, next) {
@@ -32,7 +27,7 @@ const putTrigger = function(req, res, next) {
     }
 
     if(_.isObject(trigger)) {
-        trigger_mannager.update(id, trigger_id, asset, currency, trigger);
+        trigger_manager.update(id, trigger_id, asset, currency, trigger);
     }
 
     res.end();
@@ -59,10 +54,10 @@ const postTrigger = function(req, res, next) {
     }
 
     if(_.isArray(trigger)) {
-        trigger_mannager.write(id, asset, currency, trigger);
+        trigger_manager.write(id, asset, currency, trigger);
     } else
     if(_.isObject(trigger)) {
-        trigger_mannager.write(id, asset, currency, [trigger]);
+        trigger_manager.write(id, asset, currency, [trigger]);
     }
 
     res.end();
@@ -123,7 +118,7 @@ const getTrigger = function (req, res, next) {
         throw new Error("Page work with limit!");
     }
 
-    trigger_mannager.read(id, asset, currency, condition, sort, limit, page)
+    trigger_manager.read(id, asset, currency, condition, sort, limit, page)
         .then(arrayTrigger => {
             res.setHeader('content-type', 'json/text')
             res.end(JSON.stringify(arrayTrigger));

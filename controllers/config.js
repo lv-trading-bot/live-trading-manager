@@ -1,12 +1,7 @@
-const Config_Manager = require('../data_access_layer/config_manager');
-const utils = require('../utils');
 const _ = require('lodash');
 const log = require('../log');
 
-const config_manager = new Config_Manager({
-    connectionString: utils.getConnectionString(),
-    dbName: utils.getDbName()
-});
+const {config_manager} = require('../data_access_layer');
 
 const getConfig = function (req, res, next) {
     let condition, sort, limit, page;

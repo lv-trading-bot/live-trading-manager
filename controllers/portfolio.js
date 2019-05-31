@@ -1,13 +1,8 @@
-const Portfolio_Manager = require('../data_access_layer/portfolio_manager');
-const utils = require('../utils');
 const _ = require('lodash');
 const log = require('../log');
 const moment = require('moment');
 
-const portfolio_manager = new Portfolio_Manager({
-    connectionString: utils.getConnectionString(),
-    dbName: utils.getDbName()
-});
+const {portfolio_manager} = require('../data_access_layer');
 
 // Update or insert portfolio
 const putPortfolio = function (req, res, next) {

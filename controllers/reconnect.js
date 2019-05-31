@@ -1,17 +1,7 @@
-// const Trigger_Manager = require('../data_access_layer/trigger_manager');
-const Portfolio_Manager = require('../data_access_layer/portfolio_manager');
 const utils = require('../utils');
 const _ = require('lodash');
 
-// const trigger_mannager = new Trigger_Manager({
-//     connectionString: utils.getConnectionString(), 
-//     dbName: utils.getDbName()
-// });
-
-const portfolio_manager = new Portfolio_Manager({
-    connectionString: utils.getConnectionString(), 
-    dbName: utils.getDbName()
-});
+const {portfolio_manager} = require('../data_access_layer');
 
 // Reconnect không cập nhật lại trigger
 const postReconnect = function (req, res, next) {
