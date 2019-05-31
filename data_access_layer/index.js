@@ -4,6 +4,7 @@ let Status_Manager = require('./status_manager');
 let Trade_Manager = require('./trade_manager');
 let Trigger_Manager = require('./trigger_manager');
 let Advice_Manager = require('./advice_manager');
+let Pair_Control_Manager = require('./pair_control_manager');
 let utils = require('../utils');
 
 const objExport = {
@@ -28,6 +29,10 @@ const objExport = {
         dbName: utils.getDbName()
     }),
     trigger_manager: new Trigger_Manager({
+        connectionString: utils.getConnectionString(),
+        dbName: utils.getDbName()
+    }),
+    pair_control_manager: new Pair_Control_Manager({
         connectionString: utils.getConnectionString(),
         dbName: utils.getDbName()
     }),

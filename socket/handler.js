@@ -31,5 +31,8 @@ module.exports = {
     },
     onUpdatePrice: (data, type, uisockets, sendDataToUi) => {
         broadcast(uisockets, sendDataToUi, {type, data});
-    }
+    },
+    onPutPairControl: (data, type, uisockets, sendDataToUi) => {
+        broadcast(uisockets, sendDataToUi, {type, data});
+    },
 }

@@ -2,7 +2,7 @@ const utils = require('../utils');
 const axios = require('axios');
 const moment = require('moment');
 const log = require('../log');
-const { advice_manager } = require('../data_access_layer');
+const { advice_manager, pair_control_manager } = require('../data_access_layer');
 const {typeSystemAction, emitEvent} = require('../socket');
 
 const api = utils.getMachineLearningBaseApi() + utils.getMachineLearningApi().live;
@@ -67,12 +67,25 @@ const postAdvice = async (req, res, next) => {
 
     emitEvent(typeSystemAction.ON_POST_ADVICE, {asset, currency, id});
     
-    res.setHeader("content-type", "json/text")
+    res.setHeader("content-type", "json/text");
+
+    let resultsPairControl = await pair_control_manager.read({id});
+
+    let accept_buy = true;
+
+    if(resultsPairControl && resultsPairControl.length > 0) {
+        accept_buy = resultsPairControl[0].accept_buy;
+    }
+
+    if(!accept_buy) {
+        res.end(JSON.stringify({result: 0}));
+        return;
+    }
+
     try {
         res.end(JSON.stringify(await callPostAxios(body)));
     } catch (error) {
-        // res.end(JSON.stringify(error));
-        res.end(JSON.stringify({result:1}))
+        res.end(JSON.stringify(error));
     }
 }
 

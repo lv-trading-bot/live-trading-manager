@@ -9,6 +9,7 @@ const typeSystemAction = {
     ON_POST_TRADE: "onPostTrade",
     ON_POST_ADVICE: "onPostAdvice",
     ON_UPDATE_PRICE: "onUpdatePrice",
+    ON_PUT_PAIR_CONTROL: "onPutPairControl",
     
     CONNECTED: "onConnected",
     DISCONNECT: "onDisconnected"
@@ -23,6 +24,7 @@ module.exports.typeSystemAction = {
     ON_POST_TRADE: "ON_POST_TRADE",
     ON_POST_ADVICE: "ON_POST_ADVICE",
     ON_UPDATE_PRICE: "ON_UPDATE_PRICE",
+    ON_PUT_PAIR_CONTROL: "ON_PUT_PAIR_CONTROL"
 };
 
 const systemChanle = "systemChannel";

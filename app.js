@@ -14,6 +14,7 @@ var portfolioRouter = require('./routes/portfolio');
 var configRouter = require('./routes/config');
 var statusRouter = require('./routes/status');
 var adviceRouter = require('./routes/advice');
+var pairControlRouter = require('./routes/pair_control');
 
 var app = express();
 
@@ -44,6 +45,7 @@ app.use('/portfolio', portfolioRouter);
 app.use('/config', configRouter);
 app.use('/advice', adviceRouter);
 app.use('/status', statusRouter);
+app.use('/pair-control', pairControlRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
