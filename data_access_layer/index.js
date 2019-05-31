@@ -3,6 +3,7 @@ let Portfolio_Manager = require('./portfolio_manager');
 let Status_Manager = require('./status_manager');
 let Trade_Manager = require('./trade_manager');
 let Trigger_Manager = require('./trigger_manager');
+let Advice_Manager = require('./advice_manager');
 let utils = require('../utils');
 
 const objExport = {
@@ -19,6 +20,10 @@ const objExport = {
         dbName: utils.getDbName()
     }),
     trade_manager: new Trade_Manager({
+        connectionString: utils.getConnectionString(),
+        dbName: utils.getDbName()
+    }),    
+    advice_manager: new Advice_Manager({
         connectionString: utils.getConnectionString(),
         dbName: utils.getDbName()
     }),

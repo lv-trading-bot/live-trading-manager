@@ -3,7 +3,14 @@ const log = require('../log');
 
 // Type - handler
 const typeSystemAction = {
-    UPDATE_PRICE: "onUpdatePrice",
+    ON_NEW_CONNECTED_SYSTEM: "onNewConnectedSystem",
+    ON_CHANGE_STATUS_SYSTEM: "onChangStatusSystem",
+    ON_POST_TRIGGER: "onPostTrigger",
+    ON_PUT_TRIGGER: "onPutTrigger",
+    ON_PUT_PORTFOLIO: "onPutPortfolio",
+    ON_POST_TRADE: "onPostTrade",
+    ON_UPDATE_PRICE: "onUpdatePrice",
+    
     CONNECTED: "onConnected",
     DISCONNECT: "onDisconnected"
 }
@@ -68,4 +75,8 @@ module.exports.init = (server) => {
             }
         })
     })
+}
+
+module.exports.emitEvent = (from) => {
+    console.log('emittt ', from, uiSockets.length);
 }
