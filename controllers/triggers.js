@@ -1,6 +1,7 @@
 const _ = require('lodash');
 
 const {trigger_manager} = require('../data_access_layer');
+const {typeSystemAction, emitEvent} = require('../socket');
 
 // Update or insert trigger
 const putTrigger = function(req, res, next) {
@@ -29,6 +30,8 @@ const putTrigger = function(req, res, next) {
     if(_.isObject(trigger)) {
         trigger_manager.update(id, trigger_id, asset, currency, trigger);
     }
+
+    emitEvent(typeSystemAction.ON_PUT_TRIGGER, {asset, currency, id});
 
     res.end();
 }
@@ -60,6 +63,8 @@ const postTrigger = function(req, res, next) {
         trigger_manager.write(id, asset, currency, [trigger]);
     }
 
+    emitEvent(typeSystemAction.ON_POST_TRIGGER, {asset, currency, id});
+    
     res.end();
 
 }

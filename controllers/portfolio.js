@@ -3,6 +3,7 @@ const log = require('../log');
 const moment = require('moment');
 
 const {portfolio_manager} = require('../data_access_layer');
+const {typeSystemAction, emitEvent} = require('../socket');
 
 // Update or insert portfolio
 const putPortfolio = function (req, res, next) {
@@ -39,6 +40,8 @@ const putPortfolio = function (req, res, next) {
             log.warn(error);
         }
     }
+
+    emitEvent(typeSystemAction.ON_PUT_PORTFOLIO, {asset, currency, id})
 
     res.end();
 }

@@ -3,28 +3,33 @@ const log = require('../log');
 
 // Type - handler
 const typeSystemAction = {
-    ON_NEW_CONNECTED_SYSTEM: "onNewConnectedSystem",
-    ON_CHANGE_STATUS_SYSTEM: "onChangStatusSystem",
     ON_POST_TRIGGER: "onPostTrigger",
     ON_PUT_TRIGGER: "onPutTrigger",
     ON_PUT_PORTFOLIO: "onPutPortfolio",
     ON_POST_TRADE: "onPostTrade",
+    ON_POST_ADVICE: "onPostAdvice",
     ON_UPDATE_PRICE: "onUpdatePrice",
     
     CONNECTED: "onConnected",
     DISCONNECT: "onDisconnected"
 }
 
-// Type - Type
-const typeUiAction = {
-
-}
+module.exports.typeSystemAction = {
+    ON_NEW_CONNECTED_SYSTEM: "ON_NEW_CONNECTED_SYSTEM",
+    ON_NEW_CONNECTED_SYSTEM: "ON_NEW_CONNECTED_SYSTEM",
+    ON_POST_TRIGGER: "ON_POST_TRIGGER",
+    ON_PUT_TRIGGER: "ON_PUT_TRIGGER",
+    ON_PUT_PORTFOLIO: "ON_PUT_PORTFOLIO",
+    ON_POST_TRADE: "ON_POST_TRADE",
+    ON_POST_ADVICE: "ON_POST_ADVICE",
+    ON_UPDATE_PRICE: "ON_UPDATE_PRICE",
+};
 
 const systemChanle = "systemChannel";
 const uiChanle = "uiChannel";
 
-const sendDataToUi = (socket, data) => {
-    socket.emit(uiChanle, data);
+const sendDataToUi = (uiSocket, data) => {
+    uiSocket.socket.emit(uiChanle, data);
 }
 
 const systemHandler = require('./handler');
@@ -46,11 +51,11 @@ module.exports.init = (server) => {
                 log.info('System Socket Connection:', systemSockets.length);
 
                 // Handle sự kiện kết nối cho system
-                systemHandler[typeSystemAction["CONNECTED"]](saveInfo, uiSockets, sendDataToUi);
+                systemHandler[typeSystemAction["CONNECTED"]](saveInfo, "CONNECTED", uiSockets, sendDataToUi);
                 // Tìm handler phù hợp để handle
                 socket.on(systemChanle, ({type, data}) => {
                     if(typeSystemAction[type] && systemHandler[typeSystemAction[type]]) {
-                        systemHandler[typeSystemAction[type]](data, uiSockets, sendDataToUi);
+                        systemHandler[typeSystemAction[type]](data, type, uiSockets, sendDataToUi);
                     }
                 })
 
@@ -64,7 +69,7 @@ module.exports.init = (server) => {
         socket.on("disconnect", () => {
             let systemDisconnect = _.remove(systemSockets, soc => soc.random === saveRandomId);
             if( !_.isEmpty(systemDisconnect)) {
-                systemHandler[typeSystemAction["DISCONNECT"]](saveInfo, uiSockets, sendDataToUi);
+                systemHandler[typeSystemAction["DISCONNECT"]](saveInfo, "DISCONNECT", uiSockets, sendDataToUi);
                 log.info('System disconnect', systemDisconnect[0].info);
                 log.info('System Socket Connection:', systemSockets.length);
             }
@@ -77,6 +82,8 @@ module.exports.init = (server) => {
     })
 }
 
-module.exports.emitEvent = (from) => {
-    console.log('emittt ', from, uiSockets.length);
+module.exports.emitEvent = (type, data) => {
+    if(typeSystemAction[type] && systemHandler[typeSystemAction[type]]) {
+        systemHandler[typeSystemAction[type]](data, type, uiSockets, sendDataToUi);
+    }
 }

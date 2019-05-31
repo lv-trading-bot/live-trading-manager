@@ -3,6 +3,7 @@ const axios = require('axios');
 const moment = require('moment');
 const log = require('../log');
 const { advice_manager } = require('../data_access_layer');
+const {typeSystemAction, emitEvent} = require('../socket');
 
 const api = utils.getMachineLearningBaseApi() + utils.getMachineLearningApi().live;
 
@@ -64,11 +65,14 @@ const postAdvice = async (req, res, next) => {
     // Save setting
     settingCaches[body.id] = body;
 
+    emitEvent(typeSystemAction.ON_POST_ADVICE, {asset, currency, id});
+    
     res.setHeader("content-type", "json/text")
     try {
         res.end(JSON.stringify(await callPostAxios(body)));
     } catch (error) {
-        res.end(JSON.stringify(error));
+        // res.end(JSON.stringify(error));
+        res.end(JSON.stringify({result:1}))
     }
 }
 

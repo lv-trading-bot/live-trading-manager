@@ -1,6 +1,7 @@
 const _ = require('lodash');
 
 const {trade_manager} = require('../data_access_layer');
+const {typeSystemAction, emitEvent} = require('../socket');
 
 // Insert trade
 const postTrade = function (req, res, next) {
@@ -26,6 +27,8 @@ const postTrade = function (req, res, next) {
         trade_manager.write(id, asset, currency, trade);
     }
 
+    emitEvent(typeSystemAction.ON_POST_TRADE, {asset, currency, id});
+    
     res.end();
 
 }
