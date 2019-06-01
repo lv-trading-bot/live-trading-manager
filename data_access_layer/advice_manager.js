@@ -1,12 +1,12 @@
 const Base_Manager = require('./base_manager');
 
-const TYPE = "trade";
+const TYPE = "advice";
 
 /**
  * @param {string} connectionString - connection string to mongodb
  * @param {string} dbName - database name 
  */
-class Trade_Manager extends Base_Manager {
+class Advide_Manager extends Base_Manager {
     constructor(props) {
         super(props);
     }
@@ -16,10 +16,10 @@ class Trade_Manager extends Base_Manager {
      * @param {String} id - String of id
      * @param {String} asset - name of asset
      * @param {String} currency - name of currency
-     * @param {Object} trade - trade
+     * @param {Object} advice - trade
      */
-    write(id, asset, currency, trade) {
-        this._write(id, TYPE, asset, currency, [trade]);
+    write(id, asset, currency, advice) {
+        this._write(id, TYPE, asset, currency, [advice]);
     }
 
     /**
@@ -37,4 +37,4 @@ class Trade_Manager extends Base_Manager {
     }
 }
 
-module.exports = Trade_Manager;
+module.exports = Advide_Manager;

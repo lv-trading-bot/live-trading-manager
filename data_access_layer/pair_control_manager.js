@@ -1,6 +1,7 @@
 const Base_Manager = require('./base_manager');
-const TYPE = "configs";
-class Config_Manager extends Base_Manager {
+
+const TYPE = 'pair_control';
+class Pair_Control_Manager extends Base_Manager {
     constructor(props) {
         super(props);
     }
@@ -10,11 +11,11 @@ class Config_Manager extends Base_Manager {
      * @param {string} id - id của pair
      * @param {string} asset - tên của asset
      * @param {string} currency - tên của currency
-     * @param {Object} config - config
+     * @param {Object} pair_control - portfolio
      */
-    updateOrInsert(id, asset, currency, config) {
+    updateOrInsert(id, asset, currency, pair_control) {
         this._update(undefined, TYPE, undefined, undefined, {id}, {
-            ...config,
+            ...pair_control,
             id,
             asset_name: asset,
             currency_name: currency,
@@ -32,4 +33,4 @@ class Config_Manager extends Base_Manager {
     }
 }
 
-module.exports = Config_Manager;
+module.exports = Pair_Control_Manager;

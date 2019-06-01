@@ -11,7 +11,10 @@ var reconnectRouter = require('./routes/reconnect');
 var triggerRouter = require('./routes/trigger');
 var tradeRouter = require('./routes/trade');
 var portfolioRouter = require('./routes/portfolio');
+var configRouter = require('./routes/config');
+var statusRouter = require('./routes/status');
 var adviceRouter = require('./routes/advice');
+var pairControlRouter = require('./routes/pair_control');
 
 var app = express();
 
@@ -22,6 +25,14 @@ app.set('view engine', 'jade');
 app.use(logger('combined', {
   stream: fs.createWriteStream(path.join(__dirname, 'logs/requests.log'), { flags: 'a' })
 }));
+
+// allow cross access
+app.use(function(req, res, next) {
+  res.setHeader("Access-Control-Allow-Origin", "*");
+  res.setHeader("Access-Control-Allow-Methods", "*");
+  res.setHeader('Access-Control-Allow-Headers', "*")
+  next();
+})
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -33,7 +44,10 @@ app.use('/reconnect', reconnectRouter);
 app.use('/trigger', triggerRouter);
 app.use('/trade', tradeRouter);
 app.use('/portfolio', portfolioRouter);
+app.use('/config', configRouter);
 app.use('/advice', adviceRouter);
+app.use('/status', statusRouter);
+app.use('/pair-control', pairControlRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
