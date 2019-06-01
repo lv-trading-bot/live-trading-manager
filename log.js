@@ -14,7 +14,7 @@ var config = utils.getConfig();
 var debug = config.debug;
 var silent = config.silent;
 
-var production = config.production;
+var production = true;
 var loggerAdapter = config.loggerAdapter;
 
 var sendToParent = function() {

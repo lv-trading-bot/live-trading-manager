@@ -31,10 +31,6 @@ class Utils {
         return this.getConfig().mongodb.dbName;
     }
 
-    getListPairs() {
-        return this.getConfig().pairs.listPairs;
-    }
-
     getMachineLearningApi() {
         return this.getConfig().machine_learning_api;
     }
