@@ -14,7 +14,8 @@ console.log(`${process.env.DOCKER_HOST}:3006`);
 config.gekko_igniter_api = {
     base: `http://${process.env.DOCKER_HOST}:3006`,
     runGekko: '/run-gekko',
-    stopGekko: '/stop-gekko'
+    stopGekko: '/stop-gekko',
+    startGekko: '/start-gekko'
 }
 
 config.loggerAdapter = 'file';
