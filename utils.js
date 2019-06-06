@@ -38,6 +38,14 @@ class Utils {
     getMachineLearningBaseApi() {
         return this.getConfig().machine_learning_api.base;
     }
+
+    getGekkoIgniterApi() {
+        return this.getConfig().gekko_igniter_api;
+    }
+
+    getGekkoIgniterBaseApi() {
+        return this.getConfig().gekko_igniter_api.base;
+    }
 }
 
 module.exports = (new Utils());
