@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
-const {postStopGekko} = require('../controllers/stopGekko');
+const {postStartGekko} = require('../controllers/startGekko');
 
 /* GET users listing. */
-router.post('/', postStopGekko);
+router.post('/', postStartGekko);
 
 module.exports = router;
