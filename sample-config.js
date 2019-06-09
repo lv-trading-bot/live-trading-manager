@@ -10,7 +10,6 @@ config.machine_learning_api = {
     live: "/live"
 }
 
-console.log(`${process.env.DOCKER_HOST}:3006`);
 config.gekko_igniter_api = {
     base: `http://${process.env.DOCKER_HOST}:3006`,
     runGekko: '/run-gekko',

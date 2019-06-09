@@ -3,7 +3,13 @@ var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
+const log = require('./log');
+const axios = require('axios');
 var fs = require('fs');
+const {uiAuthentication} = require('./authentication');
+
+const AUTHENTICATION_TOKEN = process.env.AUTHENTICATION_TOKEN;
+axios.defaults.headers.common['Authorization'] = AUTHENTICATION_TOKEN;
 
 var indexRouter = require('./routes/index');
 var initRouter = require('./routes/init');
@@ -18,6 +24,7 @@ var pairControlRouter = require('./routes/pair_control');
 var stopGekkoRouter = require('./routes/stopGekko');
 var startGekkoRouter = require('./routes/startGekko');
 var runGekkoRouter = require('./routes/runGekko');
+var loginRouter = require('./routes/login');
 
 var app = express();
 
@@ -40,6 +47,25 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/login', loginRouter)
+// Authentication
+app.use((req, res, next) => {
+  let token = req.header("Authorization");
+  if (token !== AUTHENTICATION_TOKEN) {
+    // Ở đây có thể là user
+    let result = uiAuthentication(token);
+    if(result.isValid) {
+      next();
+    } else {
+      log.warn("Receved a invalid request");
+      res.status(403).send({error: result.errorMessage});
+      return;
+    }
+  } else {
+    next();
+  }
+})
 
 app.use('/', indexRouter);
 app.use('/init', initRouter);
