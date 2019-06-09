@@ -39,8 +39,8 @@ app.use(logger('combined', {
 // allow cross access
 app.use(function(req, res, next) {
   res.setHeader("Access-Control-Allow-Origin", "*");
-  res.setHeader("Access-Control-Allow-Methods", "*");
-  res.setHeader('Access-Control-Allow-Headers', "*")
+  res.setHeader("Access-Control-Allow-Methods", "GET, HEAD, POST, PUT, DELETE, CONNECT, OPTIONS, TRACE, PATCH, *");
+  res.setHeader('Access-Control-Allow-Headers', "Authorization, content-type, *")
   next();
 })
 app.use(express.json());
@@ -52,7 +52,7 @@ app.use('/login', loginRouter)
 // Authentication
 app.use((req, res, next) => {
   let token = req.header("Authorization");
-  if (token !== AUTHENTICATION_TOKEN) {
+  if (token !== AUTHENTICATION_TOKEN && req.method.toLowerCase() !== 'options') {
     // Ở đây có thể là user
     let result = uiAuthentication(token);
     if(result.isValid) {

@@ -15,7 +15,7 @@ const postLogin = (req, res, next) => {
     let result = checkUiLogin(username, password);
 
     if(!result.isValid) {
-        res.status(403).send({error: result.errorMessage});
+        res.status(400).send({error: result.errorMessage});
         return;
     } else {
         res.status(200).send({token: result.token});

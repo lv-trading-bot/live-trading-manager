@@ -2,6 +2,11 @@ const _ = require('lodash');
 const jwt = require('jsonwebtoken');
 const moment = require('moment');
 
+let info = require('./info');
+
+let secret = info.secret_key;
+let time_live_of_token = info.live_time_of_token;
+
 const uiAuthentication = (token) => {
     let result = {
         isValid: false,
@@ -27,13 +32,10 @@ const uiAuthentication = (token) => {
     }
 }
 
-let secret = "";
-let time_live_of_token = 0;
-
 // Check password and username
 const checkUiLogin = (username, password) => {
     // Hỗ trợ cập nhật users mà k cần restart
-    const info = require('./info');
+    info = require('./info');
     secret = info.secret_key;
     time_live_of_token = info.live_time_of_token;
     let user  = _.find(info.users, user => user.username === username);
