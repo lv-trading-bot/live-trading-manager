@@ -25,6 +25,7 @@ var stopGekkoRouter = require('./routes/stopGekko');
 var startGekkoRouter = require('./routes/startGekko');
 var runGekkoRouter = require('./routes/runGekko');
 var loginRouter = require('./routes/login');
+var backtestRouter = require('./routes/backtest');
 
 var app = express();
 
@@ -80,6 +81,7 @@ app.use('/pair-control', pairControlRouter);
 app.use('/stop-gekko', stopGekkoRouter);
 app.use('/start-gekko', startGekkoRouter);
 app.use('/run-gekko', runGekkoRouter);
+app.use('/backtest', backtestRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
