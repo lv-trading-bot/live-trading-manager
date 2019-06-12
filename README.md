@@ -28,7 +28,7 @@ config.loggerAdapter = 'file';
 module.exports = config;
 ```
 
-## Thêm file /authentication/users.js
+## Thêm file /authentication/info.js
 Example:
 ```
 module.exports = {
