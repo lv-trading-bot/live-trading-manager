@@ -21,7 +21,7 @@ const uiAuthentication = (token) => {
                 return result;
             } else {
                 result.isValid = false;
-                result.errorMessage = "The token was expire";
+                result.errorMessage = "The token was expired";
                 return result;
             }
         }
@@ -48,13 +48,13 @@ const checkUiLogin = (username, password) => {
 
     if (_.isEmpty(user)) {
         result.isValid = false;
-        result.errorMessage = "User is not exits";
+        result.errorMessage = "User is not existed";
     } else if (user.password === password) {
         result.isValid = true;
         result.token = jwt.sign({username}, secret);
     } else {
         result.isValid = false;
-        result.errorMessage = "Password is not match";
+        result.errorMessage = "Password is not matched";
     }
 
     return result;
